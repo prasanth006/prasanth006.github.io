@@ -143,6 +143,13 @@ svg{ width:1em; height:1em; }
 .list.ordered li{ counter-increment:s; position:relative; padding-left:30px; }
 .list.ordered li::before{ content:counter(s); position:absolute; left:0; top:0; font-family:var(--mono); font-size:11px; color:var(--acc); border:1px solid var(--bd2); width:20px; height:20px; display:grid; place-items:center; border-radius:6px; }
 @media(max-width:780px){ .detail-grid{ grid-template-columns:1fr; } .detail-head{ flex-direction:column; } }
+.cert-card{ padding:18px; display:flex; flex-direction:column; gap:12px; }
+.cert-head{ display:flex; align-items:flex-start; gap:12px; }
+.cert-head > svg{ color:var(--acc); flex:0 0 auto; margin-top:2px; }
+.cert-meta h3{ font-size:15px; margin:0; color:var(--tx); }
+.cert-issuer{ font-size:13px; color:var(--dim); margin:3px 0 0; }
+.cert-date{ margin-left:auto; font-family:var(--mono); font-size:12px; color:var(--faint); white-space:nowrap; }
+.cert-head .pill{ margin-left:auto; }
 </style>
 </head>
 <body>
@@ -171,9 +178,9 @@ const SKILLS = [
   { group: "Programming", icon: "cpu", items: ["Python","SQL","C","R","HTML/CSS"] },
   { group: "Machine Learning", icon: "layers", items: ["Supervised & Unsupervised Learning","Regression","Classification","Clustering (K-Means)","Feature Engineering","PCA","Model Evaluation"] },
   { group: "Data Analysis", icon: "bar-chart-3", items: ["Pandas","NumPy","Matplotlib","EDA","Data Cleaning","RFM Analysis"] },
-  { group: "Deep Learning", icon: "boxes", items: ["Neural Networks","CNNs","TensorFlow / Keras","PyTorch"] },
-  { group: "Deployment", icon: "rocket", items: ["AWS","Flask","REST API","Render"] },
-  { group:  "Tools", icon: "gear", items: ["Jupyter Notebook", "Git & GitHub", "VS code"] }
+  { group: "Deep Learning", icon: "boxes", items: ["Neural Networks","CNNs","Transfer Learning","Data Augmentation","TensorFlow / Keras","PyTorch"] },
+  { group: "Deployment", icon: "rocket", items: ["AWS","Flask","REST API","Gunicorn","ONNX Runtime","Render"] },
+  { group: "Tools", icon: "wrench", items: ["Jupyter Notebook","Git & GitHub","VS code"] }
 ];
 const PROJECTS = [
   {
@@ -244,6 +251,13 @@ const EDUCATION = [
   { degree:"M.S., Computer Science and Engineering", org:"University of North Texas, Denton, TX", period:"2024 – 2026", note:"Coursework: Machine Learning, Deep Learning, Feature Engineering, Information Retrieval" },
   { degree:"B.Tech, Computer Science (Gaming & Graphics)", org:"Chandigarh University, Mohali, India", period:"2019 – 2023", note:"Strong linear-algebra and computer-vision foundation applied to ML." },
 ];
+const CERTS = [
+  // Add each as you complete it. Template:
+  // { name:"Certification name", issuer:"Issuer / platform", date:"2026", credentialUrl:"", skills:["Skill A","Skill B"], status:"Completed" },
+  // In-progress (signals momentum to recruiters):
+  // { name:"Certification name", issuer:"Issuer", date:"", credentialUrl:"", skills:["Skill A"], status:"In progress" },
+];
+
 const ROADMAP = [
   { stage:"Machine Learning foundations", state:"done" },
   { stage:"Applied machine learning", state:"done" },
@@ -317,7 +331,15 @@ function homeHTML(){
           </div>
         </div>`).join("")}</div>`)}
 
-    ${section("roadmap","05","Trajectory","Where this is heading",`
+    ${CERTS.length ? section("certifications","05","Credentials","Certifications, verified",`
+      <div class="skill-grid">${CERTS.map(c=>`
+        <div class="card cert-card" data-reveal>
+          <div class="cert-head">${ic('badge-check')}<div class="cert-meta"><h3>${esc(c.name)}</h3><p class="cert-issuer">${esc(c.issuer)}</p></div>${c.status&&c.status.toLowerCase()==='in progress'?'<span class="pill pill-build"><span class="ping"></span>In progress</span>':(c.date?`<span class="cert-date">${esc(c.date)}</span>`:'')}</div>
+          ${c.skills&&c.skills.length?`<div class="chips">${chips(c.skills,true)}</div>`:''}
+          ${c.credentialUrl?`<a class="btn btn-outline btn-sm" href="${c.credentialUrl}" target="_blank" rel="noreferrer">${ic('external-link')} Verify</a>`:''}
+        </div>`).join("")}</div>`) : ''}
+
+    ${section("roadmap","06","Trajectory","Where this is heading",`
       <div class="pipeline">${ROADMAP.map((r,i)=>`
         <div class="pipe-node ${r.state}" data-reveal>
           <div class="pipe-dot">${r.state==='done'?'✓':i+1}</div>
@@ -325,7 +347,7 @@ function homeHTML(){
           ${r.state==='active'?'<span class="pill pill-accent">now</span>':''}
         </div>`).join("")}</div>`)}
 
-    ${section("contact","06","Contact","Let's build something",`
+    ${section("contact","07","Contact","Let's build something",`
       <div class="contact-grid">
         <div class="contact-info" data-reveal>
           <a class="contact-row" href="mailto:${PROFILE.email}">${ic('mail')}<span>${esc(PROFILE.email)}</span>${ic('arrow-up-right')}</a>
