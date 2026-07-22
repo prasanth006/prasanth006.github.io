@@ -400,6 +400,7 @@ function detailHTML(p){
       ${statusPill(p.status)}
     </div>
     <div class="detail-links">${detailLink(p.links.github,'github','GitHub')}${detailLink(p.links.demo,'external-link','Live demo')}${detailLink(p.links.readme,'book-open','README')}</div>
+    ${p.image?`<div class="detail-hero" data-reveal><img src="${p.image}" alt="${esc(p.name)} interface" loading="lazy" /></div>`:''}
     <div class="detail-metrics">${p.metrics.map(m=>`<div class="metric-tile"><div class="metric-lbl">${esc(m.label)}</div><div class="metric-val">${esc(m.value)}</div></div>`).join("")}</div>
     <div class="detail-grid">
       ${block("Problem",`<p>${esc(p.problem)}</p>`)}
