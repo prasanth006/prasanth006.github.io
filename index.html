@@ -164,7 +164,7 @@ const PROFILE = {
   location: "Denton, TX", email: "karumanchideviprasanth@gmail.com",
   github: "https://github.com/prasanth006",
   linkedin: "https://www.linkedin.com/in/deviprasanthkarumanchi/",
-  resumeUrl: "resume.pdf", // put a file named resume.pdf next to this index.html
+  resumeUrl: "Resume.pdf", // put a file named Resume.pdf next to this index.html
   headline: "I build and deploy end-to-end machine learning systems.",
   intro: "Computer Science MS candidate focused on taking models from raw data all the way to production. I care about the full path — clean data, sound modeling, honest evaluation, and a deployed app someone can actually use — not just notebooks.",
 };
@@ -287,7 +287,7 @@ function homeHTML(){
       <p class="hero-headline" data-reveal>${esc(PROFILE.headline)}</p>
       <p class="hero-intro" data-reveal>${esc(PROFILE.intro)}</p>
       <div class="hero-cta" data-reveal>
-        <a class="btn btn-primary" href="${PROFILE.resumeUrl}" target="_blank" rel="noreferrer">${ic('file-text')} Download résumé</a>
+        <a class="btn btn-primary" href="${PROFILE.ResumeUrl}" target="_blank" rel="noreferrer">${ic('file-text')} Download Résumé</a>
         <a class="btn btn-outline" href="${PROFILE.github}" target="_blank" rel="noreferrer">${ic('github')} GitHub</a>
         <a class="btn btn-outline" href="${PROFILE.linkedin}" target="_blank" rel="noreferrer">${ic('linkedin')} LinkedIn</a>
         <button class="btn btn-ghost" onclick="goTo('contact')">${ic('mail')} Contact</button>
@@ -368,7 +368,7 @@ function homeHTML(){
       <div class="footer-links">
         <a href="${PROFILE.github}" target="_blank" rel="noreferrer">GitHub</a>
         <a href="${PROFILE.linkedin}" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="${PROFILE.resumeUrl}" target="_blank" rel="noreferrer">Résumé</a>
+        <a href="${PROFILE.ResumeUrl}" target="_blank" rel="noreferrer">Résumé</a>
       </div>
     </footer>
   </main>`;
@@ -421,7 +421,7 @@ function navHTML(){
     <button class="brand" onclick="goHome()"><span class="brand-mark">DPK</span><span class="brand-name">${esc(PROFILE.name.split(' ')[0])} ${esc(PROFILE.name.split(' ').slice(-1)[0])}</span></button>
     <nav class="nav-links">${NAV.map(n=>`<button class="nav-link" onclick="navTo('${n.toLowerCase()}')">${n}</button>`).join("")}</nav>
     <div class="nav-actions">
-      <a class="btn btn-ghost btn-sm" href="${PROFILE.resumeUrl}" target="_blank" rel="noreferrer">${ic('file-text')} Resume</a>
+      <a class="btn btn-ghost btn-sm" href="${PROFILE.ResumeUrl}" target="_blank" rel="noreferrer">${ic('file-text')} Resume</a>
       <button class="icon-btn" aria-label="Toggle theme" onclick="toggleTheme()" id="themeBtn">${ic('sun')}</button>
     </div>
   </header>`;
