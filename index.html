@@ -314,7 +314,7 @@ function homeHTML(){
     ${section("projects","03","Featured work","Projects, end to end",`
       <div class="proj-grid">${PROJECTS.map(p=>`
         <button class="proj-card" data-reveal onclick="openProject('${p.id}')">
-          <div class="proj-thumb"><span class="proj-thumb-id">${esc(p.kind)}</span><div class="proj-thumb-grid"></div></div>
+          <div class="proj-thumb">${p.image?`<img class="proj-thumb-img" src="${p.image}" alt="${esc(p.name)} interface" loading="lazy" /><span class="proj-thumb-id badge">${esc(p.kind)}</span>`:`<span class="proj-thumb-id">${esc(p.kind)}</span><div class="proj-thumb-grid"></div>`}</div>
           <div class="proj-body">
             <div class="proj-top"><h3>${esc(p.name)}</h3>${statusPill(p.status)}</div>
             <p class="proj-blurb">${esc(p.blurb)}</p>
