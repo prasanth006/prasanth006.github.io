@@ -155,6 +155,8 @@ svg{ width:1em; height:1em; }
 .proj-thumb-id.badge{ position:absolute; left:12px; bottom:12px; z-index:2; padding:4px 9px; border-radius:7px; background:color-mix(in srgb,var(--bg) 72%,transparent); border:1px solid var(--bd2); backdrop-filter:blur(8px); font-size:11px; opacity:1; }
 .detail-hero{ margin:0 0 30px; border:1px solid var(--bd); border-radius:16px; overflow:hidden; background:var(--elev); }
 .detail-hero img{ display:block; width:100%; height:auto; } 
+.cf-status{ margin:12px 0 0; font-size:13px; min-height:18px; text-align:center; color:var(--dim); }
+.cf-status.ok{ color:#34d399; } .cf-status.err{ color:#f87171; }
 </style>
 </head>
 <body>
@@ -166,7 +168,7 @@ svg{ width:1em; height:1em; }
    ============================================================ */
 const PROFILE = {
   name: "Devi Prasanth Karumanchi", title: "Machine Learning Engineer", altTitle: "AI Engineer",
-  location: "Denton, TX", email: "karumanchideviprasanth@gmail.com",
+  location: "Denton, TX", email: "karumanchideviprasanth@gmail.com", web3key: "9c2dde1f-b77c-4ef8-90dc-3dc3d0013c45",
   github: "https://github.com/prasanth006",
   linkedin: "https://www.linkedin.com/in/deviprasanthkarumanchi/",
   ResumeUrl: "Resume.pdf", // put a file named Resume.pdf next to this index.html
@@ -378,6 +380,7 @@ function homeHTML(){
           <div class="field"><label>Email</label><input id="cf-email" placeholder="you@company.com" /></div>
           <div class="field"><label>Message</label><textarea id="cf-msg" rows="4" placeholder="What would you like to talk about?"></textarea></div>
           <button class="btn btn-primary btn-block" onclick="sendMail()">${ic('send')} Send message</button>
+          <p id="cf-status" class="cf-status"></p>
         </div>
       </div>`)}
 
@@ -475,11 +478,24 @@ function copyEmail(ev){
     if(el){ el.textContent="Copied to clipboard ✓"; setTimeout(()=>{ el.textContent=original; },1600); }
   }).catch(()=>{ window.location.href="mailto:"+original; });
 }
-function sendMail(){
+async function sendMail(){
   const n=(document.getElementById("cf-name")||{}).value||"", e=(document.getElementById("cf-email")||{}).value||"", m=(document.getElementById("cf-msg")||{}).value||"";
-  const subject=encodeURIComponent("Portfolio contact from "+(n||"someone"));
-  const body=encodeURIComponent(m+"\n\n— "+n+" ("+e+")");
-  window.location.href="mailto:"+PROFILE.email+"?subject="+subject+"&body="+body;
+  const st=document.getElementById("cf-status");
+  const set=(t,c)=>{ if(st){ st.textContent=t; st.className="cf-status"+(c?" "+c:""); } };
+  if(!n||!e||!m){ set("Please fill in all fields.","err"); return; }
+  set("Sending…");
+  try{
+    const res=await fetch("https://api.web3forms.com/submit",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json", "Accept":"application/json" },
+      body:JSON.stringify({ access_key:PROFILE.web3key, name:n, email:e, message:m, subject:"Portfolio contact from "+n, from_name:"Portfolio — "+n })
+    });
+    const data=await res.json();
+    if(data.success){
+      set("Message sent ✓ — thanks, I'll reply soon.","ok");
+      document.getElementById("cf-name").value=""; document.getElementById("cf-email").value=""; document.getElementById("cf-msg").value="";
+    } else { set("Something went wrong. Please email me directly.","err"); }
+  } catch(err){ set("Network error. Please email me directly.","err"); }
 }
 render("home");
 </script>
