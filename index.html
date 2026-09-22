@@ -368,7 +368,7 @@ function homeHTML(){
     ${section("contact","07","Contact","Let's build something",`
       <div class="contact-grid">
         <div class="contact-info" data-reveal>
-          <a class="contact-row" href="mailto:${PROFILE.email}">${ic('mail')}<span>${esc(PROFILE.email)}</span>${ic('arrow-up-right')}</a>
+          <a class="contact-row" href="mailto:${PROFILE.email}" onclick="copyEmail(event)">${ic('mail')}<span id="cf-emailtext">${esc(PROFILE.email)}</span>${ic('copy')}</a>
           <a class="contact-row" href="${PROFILE.linkedin}" target="_blank" rel="noreferrer">${ic('linkedin')}<span>LinkedIn</span>${ic('arrow-up-right')}</a>
           <a class="contact-row" href="${PROFILE.github}" target="_blank" rel="noreferrer">${ic('github')}<span>github.com/prasanth006</span>${ic('arrow-up-right')}</a>
           <div class="contact-row static">${ic('map-pin')}<span>${esc(PROFILE.location)}</span></div>
@@ -468,6 +468,13 @@ function openProject(id){ const p=PROJECTS.find(x=>x.id===id); if(p){ render(p);
 function closeProject(){ render("home"); window.scrollTo({top:0}); }
 function toggleTheme(){ const h=document.documentElement; h.dataset.theme = h.dataset.theme==="dark"?"light":"dark"; setThemeIcon(); }
 function setThemeIcon(){ const b=document.getElementById("themeBtn"); if(b){ b.innerHTML = document.documentElement.dataset.theme==="dark"?ic('sun'):ic('moon'); if(window.lucide) lucide.createIcons(); } }
+function copyEmail(ev){
+  ev.preventDefault();
+  const el=document.getElementById("cf-emailtext"); const original=PROFILE.email;
+  navigator.clipboard.writeText(original).then(()=>{
+    if(el){ el.textContent="Copied to clipboard ✓"; setTimeout(()=>{ el.textContent=original; },1600); }
+  }).catch(()=>{ window.location.href="mailto:"+original; });
+}
 function sendMail(){
   const n=(document.getElementById("cf-name")||{}).value||"", e=(document.getElementById("cf-email")||{}).value||"", m=(document.getElementById("cf-msg")||{}).value||"";
   const subject=encodeURIComponent("Portfolio contact from "+(n||"someone"));
