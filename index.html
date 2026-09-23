@@ -348,7 +348,7 @@ function homeHTML(){
           </div>
         </div>`).join("")}</div>`)}
 
-    ${CERTS.length ? section("certifications","05","Credentials","Certifications, verified",`
+    ${CERTS.length ? section("certifications","05","Credentials","Certifications",`
       <div class="skill-grid">${CERTS.map(c=>`
         <div class="card cert-card" data-reveal>
           <div class="cert-head">${ic('badge-check')}<div class="cert-meta"><h3>${esc(c.name)}</h3><p class="cert-issuer">${esc(c.issuer)}</p></div>${c.status&&c.status.toLowerCase()==='in progress'?'<span class="pill pill-build"><span class="ping"></span>In progress</span>':(c.date?`<span class="cert-date">${esc(c.date)}</span>`:'')}</div>
