@@ -177,7 +177,7 @@ const PROFILE = {
 };
 const STATS = [
   { value: "3", label: "Production ML apps shipped" },
-  { value: "3", label: "End-to-end projects" },
+  { value: "4", label: "End-to-end projects" },
   { value: "540K+", label: "Records processed" },
   { value: "10+", label: "ML techniques applied" },
 ];
@@ -256,6 +256,29 @@ const PROJECTS = [
       future:["Try deeper backbones (ResNet50 / EfficientNet)","Add Grad-CAM visual explanations","Batch / multi-image inference"],
     },
   },
+    {
+    id:"seattle-airbnb-tableau", name:"Seattle AirBnB — Tableau Dashboard", kind:"Data Visualization", status:"Completed",
+    image:"assets/seattle-airbnb-tableau.webp",
+    blurb:"An interactive Tableau dashboard over Seattle AirBnB data — pricing by bedroom, price across 27 zipcodes (bar + map), and a full year of booking revenue.",
+    problem:"Raw AirBnB listing and calendar tables don't answer the practical questions on their own — what drives price, where the expensive neighborhoods are, and how revenue moves across the year.",
+    objective:"Join the listing and calendar data and build an interactive dashboard that surfaces pricing, geographic, and revenue patterns at a glance.",
+    tech:["Tableau","Tableau Public","Data Joins","Calculated Fields","Filled Maps"],
+    mlConcepts:["Multi-table Joins","Aggregation","Geographic Mapping","Dashboard Design","Data Storytelling"],
+    workflow:["Load Listings + Calendar data","Join on listing ID","Build 5 worksheets (bar, line, map, table)","Combine into one dashboard","Publish to Tableau Public"],
+    features:["Average price by bedroom count","Price ranked across 27 Seattle zipcodes","Filled map of price by neighborhood","Full-year weekly revenue trend","Interactive, filterable dashboard on Tableau Public"],
+    metrics:[{label:"Listings analyzed",value:"2,580"},{label:"Neighborhoods",value:"27 zips"},{label:"2016 revenue",value:"$97.7M"}],
+    links:{ github:"https://github.com/prasanth006/seattle-airbnb-tableau", demo:"https://public.tableau.com/app/profile/devi.prasanth.karumanchi/viz/AirBnBTableauProject_17907364449780/AirBnBProject", readme:"https://github.com/prasanth006/seattle-airbnb-tableau#readme" },
+    detail:{
+      overview:"An interactive Tableau dashboard exploring the Seattle AirBnB market. I joined the Listings and Calendar tables, then built five linked views — pricing by bedroom, price by zipcode (ranked bar + filled map), listing supply, and a full year of booking revenue — combined into one published dashboard. Built as a portfolio-level project while learning Tableau.",
+      architecture:["Listings + Calendar data sources","Join on listing ID","Worksheets: bar, line, filled map, text table","Assembled into one dashboard","Published to Tableau Public"],
+      dataset:"Kaggle Seattle AirBnB Open Data — a Listings table joined to a Calendar table (per-day price/availability), covering 2,580 listings across 27 Seattle zipcodes.",
+      model:"A Tableau workbook joining Listings to Calendar on listing ID, with calculated aggregations (average price, distinct counts, summed revenue) driving bar, line, filled-map, and text-table views, all combined into one interactive dashboard.",
+      evaluation:["Average price rises steadily with bedrooms — $96 (1BR) to $585 (6BR)","Supply is concentrated in small units: 1,811 of 2,580 listings are 1BR","Zipcode 98134 is the priciest (~$207 avg); 98125 the lowest (~$65)","2016 revenue totals ~$97.7M, climbing from ~$1M and leveling near ~$2M/week"],
+      lessons:["Joining and shaping the data mattered more than any single chart","A filled map turns raw zipcode prices into an instantly readable story"],
+      future:["Add interactive filters (bedroom, price range)","Blend in review or occupancy data","Rebuild with a live data refresh"],
+    },
+  },
+
 ];
 const EDUCATION = [
   { 
@@ -421,12 +444,12 @@ function detailHTML(p){
       ${block("Problem",`<p>${esc(p.problem)}</p>`)}
       ${block("Objective",`<p>${esc(p.objective)}</p>`)}
       ${block("Dataset",`<p>${esc(D.dataset)}</p>`)}
-      ${block("Model",`<p>${esc(D.model)}</p>`)}
+      ${block("Approach",`<p>${esc(D.model)}</p>`)}
       ${block("Architecture",ol(D.architecture))}
       ${block("Workflow",ol(p.workflow))}
-      ${block("Evaluation",ul(D.evaluation))}
+      ${block("Results",ul(D.evaluation))}
       ${block("Key features",ul(p.features))}
-      ${block("ML concepts",`<div class="chips">${chips(p.mlConcepts)}</div>`)}
+      ${block("Key concepts",`<div class="chips">${chips(p.mlConcepts)}</div>`)}
       ${block("Tech stack",`<div class="chips">${chips(p.tech)}</div>`)}
       ${block("Lessons learned",ul(D.lessons))}
       ${block("Future improvements",ul(D.future))}
